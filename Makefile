@@ -5,6 +5,7 @@ LIB			=	./lib
 LIBFTDIR	=	$(LIB)/ft_printf
 LIBFT		=	$(LIBFTDIR)/libftprintf.a
 
+NAME			=	server client
 CLIENT_NAME		=	client
 CLIENT_SRCS		=	./src/client.c\
 
@@ -36,6 +37,11 @@ fclean: clean
 
 re: fclean all
 
-test: 
+kill:
+	@ps | grep \./server | grep -v grep | awk '{print $$1}' | xargs -n1 kill
+
+test: all
 	norminette include src bonus
-	$(MAKE) all
+	./server &
+	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} $$(yes | tr -d '\n' | head -c10000)
+	ps | grep "./server" | grep -v grep | awk '{print $$1}' | xargs -n1 kill

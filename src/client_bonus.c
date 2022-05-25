@@ -6,15 +6,14 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/25 21:15:50 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/25 22:01:45 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-#include <stdio.h>
+// TODO: remove
 #include <stdlib.h>
-#include <string.h>
 
 static volatile sig_atomic_t	g_isack;
 
@@ -56,6 +55,7 @@ int	main(int argc, char **argv)
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
 	(void)sigaction(SIGUSR1, &act, NULL);
+	// TODO: strtol
 	send_msg(strtol(argv[1], NULL, 10), argv[2]);
 	return (0);
 }

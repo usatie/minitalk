@@ -6,14 +6,13 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/25 21:36:08 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/25 22:02:19 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-#include <stdio.h>
-#include <string.h>
+#include "ft_printf.h"
 
 #ifndef BUFSIZE
 # define BUFSIZE 10
@@ -54,7 +53,7 @@ int	main(void)
 {
 	struct sigaction	act;
 
-	printf("PID is %d\n", getpid());
+	ft_printf("PID is %d\n", getpid());
 	act.sa_handler = handler;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;

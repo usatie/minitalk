@@ -6,7 +6,7 @@
 #    By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 04:40:53 by susami            #+#    #+#              #
-#    Updated: 2022/05/25 20:55:07 by susami           ###   ########.fr        #
+#    Updated: 2022/05/25 21:50:32 by susami           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ kill:
 test: all
 	./server &
 	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} $$(yes | tr -d '\n' | head -c10000)
-	@#ps | grep "./server" | grep -v grep | awk '{printf $$1}' | xargs -I {} ./client {} "hello world! My name is Shun Usami. Nice to meet you! What is your name? How are you? Are you tired?"
 	ps | grep "./server" | grep -v grep | awk '{print $$1}' | xargs -n1 kill
 
 server: $(SERVER_SRC)
