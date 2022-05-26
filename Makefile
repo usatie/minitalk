@@ -1,41 +1,42 @@
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra -I ./include
 
-LIB			=	./lib
-LIBFTDIR	=	$(LIB)/ft_printf
-LIBFT		=	$(LIBFTDIR)/libftprintf.a
+FTPRINTFDIR	=	.lib/ft_printf
+LIB			=	$(FTPRINTFDIR)/libftprintf.a
 
-SERVER_NAME		=	server
+SERVER		=	server
 SERVER_SRC		=	./src/server.c
 
-CLIENT_NAME		=	client
+CLIENT		=	client
 CLIENT_SRC		=	./src/client.c
 
-NAME			=	$(SERVER_NAME) $(CLIENT_NAME)
+NAME			=	minitalk
 
 ifdef WITH_BONUS
 	SERVER_SRC = ./src/server_bonus.c
 	CLIENT_SRC = ./src/client_bonus.c
 endif
 
-.PHONY: all clean fclean re test
+.PHONY: $(NAME) all clean fclean re test
 
-all: $(CLIENT_NAME) $(SERVER_NAME)
+all: $(NAME)
+
+$(NAME): $(CLIENT) $(SERVER)
 
 bonus:
 	$(MAKE) WITHBONUS=1
 
-$(CLIENT_NAME): $(CLIENT_SRC) $(LIBFT)
-	$(CC) -o $(CLIENT_NAME) $(CLIENT_SRC) $(LIBFT) $(CFLAGS)
+$(CLIENT): $(CLIENT_SRC) $(LIB)
+	$(CC) -o $(CLIENT) $(CLIENT_SRC) $(LIB) $(CFLAGS)
 
-$(SERVER_NAME): $(SERVER_SRC) $(LIBFT)
-	$(CC) -o $(SERVER_NAME) $(SERVER_SRC) $(LIBFT) $(CFLAGS)
+$(SERVER): $(SERVER_SRC) $(LIB)
+	$(CC) -o $(SERVER) $(SERVER_SRC) $(LIB) $(CFLAGS)
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFTDIR) bonus
+$(LIB):
+	$(MAKE) -C $(FTPRINTFDIR) bonus
 
 clean:
-	$(RM) $(NAME)
+	$(RM) $(CLIENT) $(SERVER) *.out
 
 fclean: clean
 

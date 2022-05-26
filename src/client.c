@@ -6,14 +6,14 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/25 22:02:42 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/26 13:56:47 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-// TODO: remove
-#include <stdlib.h>
+#include "ft_printf.h"
+#include "libft.h"
 
 #ifndef SLEEP_US
 # define SLEEP_US 20
@@ -43,8 +43,20 @@ static void	send_msg(pid_t pid, char *msg)
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	// TODO: strtol
-	send_msg(strtol(argv[1], NULL, 10), argv[2]);
-	return (0);
+	int	pid;
+
+	if (argc != 3)
+	{
+		ft_printf("Usage: %s pid num-sigs sig-num [sig-num-2]\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	pid = ft_atoi(argv[1]);
+	if (pid < 100 || pid > 99998)
+	{
+		ft_printf("[%s] is not valid pid(100~99998).\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+	if (*argv[2])
+		send_msg(pid, argv[2]);
+	return (EXIT_SUCCESS);
 }
