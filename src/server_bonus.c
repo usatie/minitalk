@@ -6,46 +6,36 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/25 22:01:58 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/26 11:42:32 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
 #include "ft_printf.h"
+#include "libft.h"
 
-#ifndef BUFSIZE
-# define BUFSIZE 10
-#endif
-
-typedef struct s_g_msg {
+typedef struct s_msg {
 	char	c;
-	int		c_len;
-	char	buf[BUFSIZE];
 	int		len;
-}	t_g_msg;
-
-static t_g_msg	g_msg;
+}	t_msg;
 
 static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 {
-	g_msg.c <<= 1;
-	g_msg.c_len++;
+	static t_msg	msg;
+
+	msg.c <<= 1;
+	msg.len++;
 	if (sig == SIGUSR1)
-		g_msg.c += 1;
+		msg.c += 1;
 	else if (sig == SIGUSR2)
-		g_msg.c += 0;
-	if (g_msg.c_len == 8)
+		msg.c += 0;
+	if (msg.len == 8)
 	{
-		g_msg.buf[g_msg.len] = g_msg.c;
-		g_msg.len++;
-		if (g_msg.c == '\0' || g_msg.len == BUFSIZE)
-		{
-			write(STDOUT_FILENO, g_msg.buf, g_msg.len);
-			g_msg.len = 0;
-		}
-		g_msg.c = 0;
-		g_msg.c_len = 0;
+		if (msg.c != '\0')
+			write(STDOUT_FILENO, &msg.c, 1);
+		msg.c = 0;
+		msg.len = 0;
 	}
 	kill(siginfo->si_pid, SIGUSR1);
 }
@@ -57,9 +47,13 @@ int	main(void)
 	ft_printf("PID is %d\n", getpid());
 	act.sa_sigaction = handler;
 	sigemptyset(&act.sa_mask);
+	sigaddset(&act.sa_mask, SIGUSR1);
+	sigaddset(&act.sa_mask, SIGUSR2);
 	act.sa_flags = SA_SIGINFO;
-	(void)sigaction(SIGUSR1, &act, NULL);
-	(void)sigaction(SIGUSR2, &act, NULL);
+	if (sigaction(SIGUSR1, &act, NULL) < 0)
+		exit(errno);
+	if (sigaction(SIGUSR2, &act, NULL) < 0)
+		exit(errno);
 	while (1)
 		pause();
 	return (0);
