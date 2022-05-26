@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 11:30:05 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/26 11:43:20 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(void)
 {
 	struct sigaction	act;
 
-	ft_printf("PID is %d\n", getpid());
+	ft_printf("[SERVER] PID is %d\n", getpid());
 	act.sa_handler = handler;
 	sigemptyset(&act.sa_mask);
 	sigaddset(&act.sa_mask, SIGUSR1);
