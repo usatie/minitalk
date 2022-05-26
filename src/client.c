@@ -6,17 +6,17 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 13:56:47 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/26 23:27:27 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-#include "ft_printf.h"
+#include <stdlib.h>
 #include "libft.h"
 
 #ifndef SLEEP_US
-# define SLEEP_US 20
+# define SLEEP_US 100
 #endif
 
 static void	send_msg(pid_t pid, char *msg)

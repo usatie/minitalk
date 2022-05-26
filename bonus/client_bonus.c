@@ -6,13 +6,13 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 14:52:28 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/27 00:52:42 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-#include "ft_printf.h"
+#include <stdlib.h>
 #include "libft.h"
 
 typedef struct s_ack {
@@ -47,9 +47,16 @@ static void	send_msg(pid_t pid, char *msg)
 	}
 }
 
+// sometimes si_pid becomes 0 even though it is come from server...
+/*
+ * if (siginfo->si_pid == g_ack.pid)
+ * 		g_ack.flg = 1
+ */
 static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 {
-	if (siginfo->si_pid == g_ack.pid)
+	(void)sig;
+	(void)ucontext;
+	if (siginfo->si_pid == g_ack.pid || siginfo->si_pid == 0)
 		g_ack.flg = 1;
 }
 

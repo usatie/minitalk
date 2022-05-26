@@ -25,7 +25,7 @@ all: $(NAME)
 $(NAME): $(CLIENT) $(SERVER)
 
 bonus:
-	$(MAKE) WITHBONUS=1
+	$(MAKE) WITH_BONUS=1
 
 $(SERVER): $(SERVER_SRC) $(LIB)
 	$(CC) -o $(SERVER) $(SERVER_SRC) $(LIB) $(CFLAGS)

@@ -6,14 +6,14 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 14:30:17 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/26 23:21:01 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
-#include "ft_printf.h"
+#include <stdlib.h>
 #include "libft.h"
 
 typedef struct s_msg {

@@ -6,13 +6,13 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 14:31:21 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/27 00:48:37 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-#include "ft_printf.h"
+#include <stdlib.h>
 #include "libft.h"
 
 typedef struct s_msg {
@@ -20,10 +20,16 @@ typedef struct s_msg {
 	int		len;
 }	t_msg;
 
+// Sometimes siginfo->si_pid become 0
+// even though it is come from client.
+// So I reserve the client_pid.
+static volatile sig_atomic_t	g_client_pid;
+
 static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 {
 	static t_msg	msg;
 
+	(void)ucontext;
 	msg.c <<= 1;
 	msg.len++;
 	if (sig == SIGUSR1)
@@ -37,7 +43,13 @@ static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 		msg.c = 0;
 		msg.len = 0;
 	}
-	kill(siginfo->si_pid, SIGUSR1);
+	if (siginfo->si_pid != 0)
+	{
+		g_client_pid = siginfo->si_pid;
+		kill(siginfo->si_pid, SIGUSR1);
+	}
+	else
+		kill(g_client_pid, SIGUSR1);
 }
 
 int	main(void)
