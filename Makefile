@@ -3,9 +3,9 @@ CFLAGS		=	-Wall -Werror -Wextra -I ./include
 
 NAME			=	minitalk
 
-FTPRINTFDIR	=	./lib/ft_printf
-FTPRINTF	=	$(FTPRINTFDIR)/libftprintf.a
-LIB			=	$(FTPRINTF)
+LIBFTDIR	=	./lib/libft
+LIBFT		=	$(LIBFTDIR)/libft.a
+LIB			=	$(LIBFT)
 
 SERVER		=	server
 SERVER_SRC		=	./src/server.c
@@ -33,8 +33,8 @@ $(SERVER): $(SERVER_SRC) $(LIB)
 $(CLIENT): $(CLIENT_SRC) $(LIB)
 	$(CC) -o $(CLIENT) $(CLIENT_SRC) $(LIB) $(CFLAGS)
 
-$(FTPRINTF):
-	$(MAKE) -C $(FTPRINTFDIR) bonus
+$(LIBFT):
+	$(MAKE) -C $(LIBFTDIR)
 
 clean:
 	$(RM) $(CLIENT) $(SERVER) *.out
