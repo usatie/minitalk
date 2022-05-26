@@ -46,7 +46,9 @@ kill:
 	@ps | grep \./server | grep -v grep | awk '{print $$1}' | xargs -n1 kill
 
 test: all
-	@#norminette include src bonus
+	norminette include src bonus
 	./server | tail +2 | wc -c &
+	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} hello
+	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} world
 	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} $$(yes "hello" | tr -d '\n' | head -c10000)
 	ps | grep "./server" | grep -v grep | awk '{print $$1}' | xargs -n1 kill
