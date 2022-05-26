@@ -4,7 +4,8 @@ CFLAGS		=	-Wall -Werror -Wextra -I ./include
 NAME			=	minitalk
 
 FTPRINTFDIR	=	./lib/ft_printf
-LIB			=	$(FTPRINTFDIR)/libftprintf.a
+FTPRINTF	=	$(FTPRINTFDIR)/libftprintf.a
+LIB			=	$(FTPRINTF)
 
 SERVER		=	server
 SERVER_SRC		=	./src/server.c
@@ -32,7 +33,7 @@ $(SERVER): $(SERVER_SRC) $(LIB)
 $(CLIENT): $(CLIENT_SRC) $(LIB)
 	$(CC) -o $(CLIENT) $(CLIENT_SRC) $(LIB) $(CFLAGS)
 
-$(LIB):
+$(FTPRINTF):
 	$(MAKE) -C $(FTPRINTFDIR) bonus
 
 clean:
@@ -45,10 +46,9 @@ re: fclean all
 kill:
 	@ps | grep \./server | grep -v grep | awk '{print $$1}' | xargs -n1 kill
 
+tmp:
+	diff <(echo "hello") <(print "hello")
+
 test: all
-	norminette include src bonus
-	./server | tail +2 | wc -c &
-	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} hello
-	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} world
-	ps | grep "./server" | grep -v grep | head -1 | awk '{printf $$1}' | xargs -I {} ./client {} $$(yes "hello" | tr -d '\n' | head -c10000)
-	ps | grep "./server" | grep -v grep | awk '{print $$1}' | xargs -n1 kill
+	-norminette include src bonus
+	-./test.sh
