@@ -1,7 +1,9 @@
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra -I ./include
 
-FTPRINTFDIR	=	.lib/ft_printf
+NAME			=	minitalk
+
+FTPRINTFDIR	=	./lib/ft_printf
 LIB			=	$(FTPRINTFDIR)/libftprintf.a
 
 SERVER		=	server
@@ -10,14 +12,12 @@ SERVER_SRC		=	./src/server.c
 CLIENT		=	client
 CLIENT_SRC		=	./src/client.c
 
-NAME			=	minitalk
-
 ifdef WITH_BONUS
-	SERVER_SRC = ./src/server_bonus.c
-	CLIENT_SRC = ./src/client_bonus.c
+	SERVER_SRC = ./bonus/server_bonus.c
+	CLIENT_SRC = ./bonus/client_bonus.c
 endif
 
-.PHONY: $(NAME) all clean fclean re test
+.PHONY: $(NAME) all bonus clean fclean re test
 
 all: $(NAME)
 
@@ -26,11 +26,11 @@ $(NAME): $(CLIENT) $(SERVER)
 bonus:
 	$(MAKE) WITHBONUS=1
 
-$(CLIENT): $(CLIENT_SRC) $(LIB)
-	$(CC) -o $(CLIENT) $(CLIENT_SRC) $(LIB) $(CFLAGS)
-
 $(SERVER): $(SERVER_SRC) $(LIB)
 	$(CC) -o $(SERVER) $(SERVER_SRC) $(LIB) $(CFLAGS)
+
+$(CLIENT): $(CLIENT_SRC) $(LIB)
+	$(CC) -o $(CLIENT) $(CLIENT_SRC) $(LIB) $(CFLAGS)
 
 $(LIB):
 	$(MAKE) -C $(FTPRINTFDIR) bonus

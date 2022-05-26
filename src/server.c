@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 11:43:20 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/26 14:30:17 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	main(void)
 	sigaddset(&act.sa_mask, SIGUSR2);
 	act.sa_flags = 0;
 	if (sigaction(SIGUSR1, &act, NULL) < 0)
-		exit(errno);
+		exit(EXIT_FAILURE);
 	if (sigaction(SIGUSR2, &act, NULL) < 0)
-		exit(errno);
+		exit(EXIT_FAILURE);
 	while (1)
 		pause();
-	return (0);
+	return (EXIT_SUCCESS);
 }
