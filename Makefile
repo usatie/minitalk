@@ -37,9 +37,10 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)
 
 clean:
-	$(RM) $(CLIENT) $(SERVER) *.out
+	$(RM) src/*.o bonus/*.o *.out
 
 fclean: clean
+	$(RM) $(CLIENT) $(SERVER)
 
 re: fclean all
 

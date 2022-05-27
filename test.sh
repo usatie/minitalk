@@ -30,6 +30,7 @@ do
 	ps | grep "./server" | grep -v grep | awk '{print $1}' | xargs -n1 kill
 done
 
+sleep 0.1
 printf "\n\n"
 
 # 2. Testing messages from multiple processes in a row
