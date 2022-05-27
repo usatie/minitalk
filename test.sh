@@ -3,6 +3,7 @@ set -e
 
 # Test Cases
 MSG_LEN=10000
+printf "MSG_LEN=$MSG_LEN\n"
 
 MSG1="hello"
 MSG2="world"
@@ -24,12 +25,11 @@ echo "Launch server"
 
 # Launch clients continuously
 SERVER_PID=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
-set -v
 for msg in "${MSGS[@]}"
 do
+	printf "./client $SERVER_PID $msg\n"
 	./client $SERVER_PID $msg
 done
-set +v
 
 # After the tests, kill all server processes
 printf "After the tests, kill all server processes...\n\n"
