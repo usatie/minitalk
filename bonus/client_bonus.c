@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/27 00:52:42 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/28 14:35:48 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	send_msg(pid_t pid, char *msg)
 			while (!g_ack.flg)
 				pause();
 			g_ack.flg = 0;
+			usleep(10);
 			if (*msg & (1 << (7 - i)))
 				kill(pid, SIGUSR1);
 			else

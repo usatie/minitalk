@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 23:27:27 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/28 14:48:53 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static void	send_msg(pid_t pid, char *msg)
 		i = 0;
 		while (i < 8)
 		{
+			usleep(SLEEP_US);
 			if (*msg & (1 << (7 - i)))
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
 			i++;
-			usleep(SLEEP_US);
 		}
 		if (*msg == '\0')
 			return ;

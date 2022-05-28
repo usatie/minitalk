@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/27 00:48:37 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/28 14:35:58 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 		msg.c = 0;
 		msg.len = 0;
 	}
+	usleep(10);
 	if (siginfo->si_pid != 0)
 	{
 		g_client_pid = siginfo->si_pid;
