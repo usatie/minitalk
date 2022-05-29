@@ -6,7 +6,7 @@
 #    By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/06 07:33:20 by susami            #+#    #+#              #
-#    Updated: 2022/05/26 23:14:09 by susami           ###   ########.fr        #
+#    Updated: 2022/05/28 23:55:34 by susami           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,18 +59,26 @@ B_SRCS	=	ft_lstnew.c			\
 			ft_lstiter.c		\
 			ft_lstmap.c			\
 
-PRINTF_SRCS	=	ft_printf/ft_printf.c\
-				ft_printf/ft_printf_cs.c\
-				ft_printf/ft_printf_diu.c\
-				ft_printf/ft_printf_fmt.c\
-				ft_printf/ft_printf_hex.c\
-				ft_printf/ft_printf_parser.c\
-				ft_printf/ft_printf_percent.c\
-				ft_printf/ft_printf_px.c\
+EXTRA_SRCS	=	ft_isspace.c			\
+				ft_strtol.c				\
 
-OUT_O_DIR	=	output
-SRCS		=	$(M_SRCS) $(B_SRCS) $(PRINTF_SRCS)
-OBJS=$(SRCS:%.c=$(OUT_O_DIR)/%.o)
+PRINTF_SRCS	=	ft_printf/ft_printf.c			\
+				ft_printf/ft_vdprintf.c			\
+				ft_printf/ft_vprintf.c			\
+				ft_printf/ft_dprintf.c			\
+				ft_printf/ft_printf_cs.c		\
+				ft_printf/ft_printf_diu.c		\
+				ft_printf/ft_printf_fmt.c		\
+				ft_printf/ft_printf_hex.c		\
+				ft_printf/ft_printf_parser.c	\
+				ft_printf/ft_printf_percent.c	\
+				ft_printf/ft_printf_px.c		\
+
+ARGPARSE_SRCS	=	ft_argparse/ft_argparse_num.c	\
+
+OBJDIR		=	objs
+SRCS		=	$(M_SRCS) $(B_SRCS) $(EXTRA_SRCS) $(PRINTF_SRCS) $(ARGPARSE_SRCS)
+OBJS		=	$(SRCS:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
@@ -78,16 +86,17 @@ $(NAME): $(OBJS) $(INC)
 	ar -r $(NAME) $(OBJS) 
 
 clean:
-	@$(RM) $(OUT_O_DIR)/*.o $(OUT_O_DIR)/*.o
+	@$(RM) -r $(OBJDIR)
 
 fclean: clean
 	@$(RM) $(NAME)
 
 re: fclean all
 
-$(OUT_O_DIR)/%.o: %.c
-	@mkdir -p $(OUT_O_DIR)
-	@mkdir -p $(OUT_O_DIR)/ft_printf
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(@D)
 	$(CC) -c $< -o $@ $(CFLAGS)
+
+bonus: all
 
 .PHONY: all clean fclean re

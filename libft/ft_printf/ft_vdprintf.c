@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_vdprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 09:04:10 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 23:12:50 by susami           ###   ########.fr       */
+/*   Created: 2022/05/28 17:47:17 by susami            #+#    #+#             */
+/*   Updated: 2022/05/28 17:47:37 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	print_bytes(t_fmt *fmt, char *str, size_t len)
 		fmt->out_size = -1;
 	}
 	else
-		fmt->out_size += write(STDOUT_FILENO, str, len);
+		fmt->out_size += write(fmt->fd, str, len);
 }
 
 // print len size str with padding
@@ -80,7 +80,7 @@ void	print_non_conversion_bytes(t_fmt *fmt)
 	print_bytes(fmt, s, len);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	t_fmt	fmt;
 
@@ -90,7 +90,7 @@ int	ft_printf(const char *format, ...)
 		return (-1);
 	}
 	fmt_init(&fmt, format);
-	va_start(fmt.ap, format);
+	fmt.fd = fd;
 	while (fmt.out_size > -1 && *(fmt.format))
 	{
 		fmt_clear_spec(&fmt);
@@ -100,11 +100,10 @@ int	ft_printf(const char *format, ...)
 			parse_flags(&fmt);
 			parse_width(&fmt);
 			parse_precision(&fmt);
-			parse_conversion_spec(&fmt);
+			parse_conversion_spec(&fmt, ap);
 		}
 		else
 			print_non_conversion_bytes(&fmt);
 	}
-	va_end(fmt.ap);
 	return (fmt.out_size);
 }

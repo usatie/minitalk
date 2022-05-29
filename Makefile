@@ -3,7 +3,7 @@ CFLAGS		=	-Wall -Werror -Wextra -I ./include
 
 NAME			=	minitalk
 
-LIBFTDIR	=	./lib/libft
+LIBFTDIR	=	libft
 LIBFT		=	$(LIBFTDIR)/libft.a
 LIB			=	$(LIBFT)
 

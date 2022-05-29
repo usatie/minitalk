@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 20:43:35 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 23:11:43 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/28 17:48:56 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 # include <stddef.h>
 # include <stdarg.h>
-//# include <unistd.h>
-//# include <errno.h>
-//# include <limits.h>
 
 // specifications
 // #/0/-/ /+/.
@@ -43,7 +40,6 @@
 typedef struct s_fmt
 {
 	const char	*format;
-	va_list		ap;
 	int			out_size;
 
 	char		conversion;
@@ -53,6 +49,8 @@ typedef struct s_fmt
 
 	char		sign_c;
 	size_t		buf_len;
+
+	int			fd;
 }	t_fmt;
 
 // fmt.c
@@ -64,21 +62,22 @@ void		fmt_clear_spec(t_fmt *fmt);
 // static void	parse_conversion_spec(t_fmt *fmt)
 void		print(t_fmt *fmt, char *str, size_t len);
 int			ft_printf(const char *format, ...);
+int			ft_vdprintf(int fd, const char *format, va_list ap);
 
 // spec_parser.c
 void		parse_flags(t_fmt *fmt);
 void		parse_width(t_fmt *fmt);
 void		parse_precision(t_fmt *fmt);
-void		parse_conversion_spec(t_fmt *fmt);
+void		parse_conversion_spec(t_fmt *fmt, va_list ap);
 
 // printf_cs.c
-void		printf_c(t_fmt *fmt);
-void		printf_s(t_fmt *fmt);
+void		printf_c(t_fmt *fmt, va_list ap);
+void		printf_s(t_fmt *fmt, va_list ap);
 
 // printf_px.c
-void		printf_p(t_fmt *fmt);
-void		printf_x_lower(t_fmt *fmt);
-void		printf_x_upper(t_fmt *fmt);
+void		printf_p(t_fmt *fmt, va_list ap);
+void		printf_x_lower(t_fmt *fmt, va_list ap);
+void		printf_x_upper(t_fmt *fmt, va_list ap);
 
 // puthex.c
 // static void	set_buf_hex(char *buf, unsigned long long n,
@@ -90,11 +89,11 @@ void		puthex(unsigned long long n, int capitals,
 // printf_diu.c
 // static void		puti(int n);
 // static void	putui(unsigned int n);
-void		printf_di(t_fmt *fmt);
-void		printf_u(t_fmt *fmt);
+void		printf_di(t_fmt *fmt, va_list ap);
+void		printf_u(t_fmt *fmt, va_list ap);
 
 // printf_percent.c
-void		printf_percent(t_fmt *fmt);
+void		printf_percent(t_fmt *fmt, va_list ap);
 
 // conversions
 # define N_CONVERSIONS 9
@@ -110,7 +109,7 @@ static const char	g_conversions[N_CONVERSIONS] = {
 	'x',
 	'X'
 };
-static	void		(*g_conversion_funcs[N_CONVERSIONS])(t_fmt *) = {
+static	void		(*g_conversion_funcs[N_CONVERSIONS])(t_fmt *, va_list) = {
 	printf_percent,
 	printf_c,
 	printf_s,

@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_percent.c                                :+:      :+:    :+:   */
+/*   ft_printf_fmt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/23 22:00:54 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 22:30:42 by susami           ###   ########.fr       */
+/*   Created: 2022/04/25 13:02:19 by susami            #+#    #+#             */
+/*   Updated: 2022/05/28 17:31:25 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "ft_printf.h"
 
-void	printf_percent(t_fmt *fmt)
+void	fmt_init(t_fmt *fmt, const char *format)
 {
-	fmt->format++;
-	print(fmt, "%", 1);
+	fmt->out_size = 0;
+	fmt->format = format;
+	fmt_clear_spec(fmt);
+}
+
+void	fmt_clear_spec(t_fmt *fmt)
+{
+	fmt->conversion = 0;
+	fmt->width = 0;
+	fmt->precision = 0;
+	fmt->flags = 0;
+	fmt->sign_c = 0;
+	fmt->buf_len = 0;
 }

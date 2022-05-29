@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 21:58:27 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 23:13:03 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/28 17:38:46 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ static void	putull(unsigned long long x, t_fmt *fmt)
 	free(buf);
 }
 
-void	printf_di(t_fmt *fmt)
+void	printf_di(t_fmt *fmt, va_list ap)
 {
 	int		x;
 
 	(fmt->format)++;
-	x = va_arg(fmt->ap, int);
+	x = va_arg(ap, int);
 	if (fmt->flags & SIGN_SPACE_FLG)
 		fmt->sign_c = ' ';
 	if (fmt->flags & SIGN_PLUS_FLG)
@@ -100,11 +100,11 @@ void	printf_di(t_fmt *fmt)
 	}
 }
 
-void	printf_u(t_fmt *fmt)
+void	printf_u(t_fmt *fmt, va_list ap)
 {
 	unsigned int	x;
 
 	(fmt->format)++;
-	x = va_arg(fmt->ap, unsigned int);
+	x = va_arg(ap, unsigned int);
 	putull(x, fmt);
 }

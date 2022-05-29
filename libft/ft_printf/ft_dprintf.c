@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 14:30:26 by susami            #+#    #+#             */
-/*   Updated: 2022/04/06 14:33:40 by susami           ###   ########.fr       */
+/*   Created: 2022/05/28 17:49:39 by susami            #+#    #+#             */
+/*   Updated: 2022/05/28 17:49:47 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_dprintf(int fd, const char *format, ...)
 {
-	size_t	cnt;
+	int		ret;
+	va_list	ap;
 
-	cnt = 0;
-	while ((*s1 || *s2) && cnt < n)
-	{
-		if (*s1 != *s2)
-			return (*(unsigned char *)s1 - *(unsigned char *)s2);
-		s1++;
-		s2++;
-		cnt++;
-	}
-	return (0);
+	va_start(ap, format);
+	ret = ft_vdprintf(fd, format, ap);
+	va_end(ap);
+	return (ret);
 }

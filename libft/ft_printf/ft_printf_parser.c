@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:34:31 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 23:12:30 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/28 17:37:10 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	parse_precision(t_fmt *fmt)
 	}
 }
 
-void	parse_conversion_spec(t_fmt *fmt)
+void	parse_conversion_spec(t_fmt *fmt, va_list ap)
 {
 	char	c;
 	int		i;
@@ -110,7 +110,7 @@ void	parse_conversion_spec(t_fmt *fmt)
 		if (c == g_conversions[i])
 		{
 			fmt->conversion = c;
-			g_conversion_funcs[i](fmt);
+			g_conversion_funcs[i](fmt, ap);
 			return ;
 		}
 		i++;
