@@ -1,6 +1,6 @@
 #!/bin/bash
 # Test Configuration
-MSG_LEN=${1:-1000}
+MSG_LEN=${1:-100}
 NUM_REPEAT=${2:-1}
 printf "NUM_REAPEAT=$NUM_REPEAT, MSG_LEN=$MSG_LEN\n"
 
@@ -8,7 +8,7 @@ printf "NUM_REAPEAT=$NUM_REPEAT, MSG_LEN=$MSG_LEN\n"
 messages+=("hello")
 messages+=("world")
 messages+=("ã‚¢ã‚¤ã‚¦ã‚¨ã‚ªí ½í¸‚í ½í¸‚í ½í¸‚")
-messages+=($(yes "0123456789" | tr -d '\n' | head -c $MSG_LEN))
+messages+=($(jot -n -s "" -b "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" 0 | head -c $MSG_LEN))
 
 for msg in "${messages[@]}"
 do
@@ -22,7 +22,7 @@ total=0
 ps | grep "./server" | grep -v grep | awk '{print $1}' | xargs -n1 kill
 
 printf "====================Testing invalid arguments====================\n"
-	./server | tail +2 | diff <(printf $msg) - &
+	./server &
 	pid=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
 	((total+=1))
 	printf "./client\n"
