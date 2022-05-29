@@ -8,7 +8,7 @@ printf "NUM_REAPEAT=$NUM_REPEAT, MSG_LEN=$MSG_LEN\n"
 messages+=("hello")
 messages+=("world")
 messages+=("ã‚¢ã‚¤ã‚¦ã‚¨ã‚ªí ½í¸‚í ½í¸‚í ½í¸‚")
-messages+=($(jot -n -s "" -b "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" 0 | head -c $MSG_LEN))
+messages+=("$(jot -n -s "" -b "$(jot -n -s "" -c 96 32)" 0 | head -c $MSG_LEN)")
 
 for msg in "${messages[@]}"
 do
@@ -74,10 +74,10 @@ do
 	for msg in "${messages[@]}"
 	do
 		((total+=1))
-		./server | tail +2 | diff <(printf $msg) - &
+		./server | tail +2 | diff <(printf "%s" "$msg") - &
 		pid=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
-		printf "./client $pid $msg\n"
-		./client $pid $msg
+		printf "./client $pid %s\n" "$msg"
+		./client $pid "$msg"
 		ps | grep "./server" | grep -v grep | awk '{print $1}' | xargs -n1 kill
 		wait $! && printf "\e[1;32m[$total] diff OK:D\n\e[m" && ((success+=1)) || printf "\e[0;31m[$total] diff error\n\e[m"
 	done
@@ -86,12 +86,12 @@ do
 	printf "\n\n"
 	printf "====================Testing messages from multiple processes in a row====================\n"
 	((total+=1))
-	./server | tail +2 | diff <(printf $combined_message) - &
+	./server | tail +2 | diff <(printf "%s" "$combined_message") - &
 	pid=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
 	for msg in "${messages[@]}"
 	do
-		printf "./client $pid $msg\n"
-		./client $pid $msg
+		printf "./client $pid %s\n" "$msg"
+		./client $pid "$msg"
 	done
 
 	# After the tests, kill all server processes
