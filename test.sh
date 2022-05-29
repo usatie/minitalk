@@ -7,6 +7,7 @@ printf "NUM_REAPEAT=$NUM_REPEAT, MSG_LEN=$MSG_LEN\n"
 # Test Cases
 messages+=("hello")
 messages+=("world")
+messages+=("ã‚¢ã‚¤ã‚¦ã‚¨ã‚ªí ½í¸‚í ½í¸‚í ½í¸‚")
 messages+=($(yes "0123456789" | tr -d '\n' | head -c $MSG_LEN))
 
 for msg in "${messages[@]}"
