@@ -21,6 +21,31 @@ total=0
 # Before starting tests, kill all server processes
 ps | grep "./server" | grep -v grep | awk '{print $1}' | xargs -n1 kill
 
+printf "[0. Testing invalid arguments]\n"
+./server | tail +2 | diff <(printf $msg) - &
+pid=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
+printf "./client 0 hello\n"
+((total+=1)) && ./client 0 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 1 hello\n"
+((total+=1)) && ./client 1 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 2 hello\n"
+((total+=1)) && ./client 2 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 3 hello\n"
+((total+=1)) && ./client 3 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 4 hello\n"
+((total+=1)) && ./client 4 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 99 hello\n"
+((total+=1)) && ./client 99 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 10000000 hello\n"
+((total+=1)) && ./client 10000000 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client 10000000000000 hello\n"
+((total+=1)) && ./client 10000000000000 hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client abcde hello\n"
+((total+=1)) && ./client abcde hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+printf "./client "$pid"abcde hello\n"
+((total+=1)) && ./client "$pid"abcde hello && printf "\e[0;31mError is not handled.\n\e[m" || printf "\e[1;32mError handling OK:D\n\e[m" && ((success+=1))
+ps | grep "./server" | grep -v grep | awk '{print $1}' | xargs -n1 kill
+
 for (( i = 0; i < $NUM_REPEAT; i++ ))
 do
 	# 1. Testing a message from single process
