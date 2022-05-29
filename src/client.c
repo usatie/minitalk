@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/29 19:01:22 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/29 23:02:26 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv)
 		err_exit("Usage: %s pid message\n", argv[0]);
 	pid = ft_argparse_int(argv[1], 0, "pid");
 	if (pid < 100 || pid > 99998)
-		err_exit("[%s] is not valid pid(100~99998).\n", argv[1]);
+		err_exit("%s is not valid pid(100~99998).\n", argv[1]);
 	if (*argv[2])
 		send_msg(pid, argv[2]);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/29 18:58:34 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/29 23:02:36 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 		err_exit("Usage: %s pid message\n", argv[0]);
 	g_ack.pid = ft_argparse_int(argv[1], 0, "g_ack.pid");
 	if (g_ack.pid < 100 || g_ack.pid > 99998)
-		err_exit("[%s] is not valid pid(100~99998).\n", argv[1]);
+		err_exit("%s is not valid pid(100~99998).\n", argv[1]);
 	if (*argv[2])
 	{
 		act.sa_sigaction = handler;
