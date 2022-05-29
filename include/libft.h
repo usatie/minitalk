@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 09:52:40 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 17:58:41 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/29 00:39:47 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
+// Extra functions
+int		ft_isspace(char c);
+long	ft_strtol(const char *str, char **endptr, int base);
+
+// ft_printf
 int		ft_vdprintf(int fd, const char *format, va_list ap);
 int		ft_vprintf(const char *format, va_list ap);
 int		ft_dprintf(int fd, const char *format, ...);

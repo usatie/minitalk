@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 14:35:48 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/29 18:58:34 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include "libft.h"
+#include "ft_argparse.h"
 
 typedef struct s_ack {
 	volatile sig_atomic_t	flg;
@@ -61,28 +62,32 @@ static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 		g_ack.flg = 1;
 }
 
+static void	err_exit(const char *format, ...)
+{
+	va_list	ap;
+
+	va_start(ap, format);
+	ft_vdprintf(STDERR_FILENO, format, ap);
+	va_end(ap);
+	exit(EXIT_FAILURE);
+}
+
 int	main(int argc, char **argv)
 {
 	struct sigaction	act;
 
 	if (argc != 3)
-	{
-		ft_printf("Usage: %s pid num-sigs sig-num [sig-num-2]\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
-	g_ack.pid = ft_atoi(argv[1]);
+		err_exit("Usage: %s pid message\n", argv[0]);
+	g_ack.pid = ft_argparse_int(argv[1], 0, "g_ack.pid");
 	if (g_ack.pid < 100 || g_ack.pid > 99998)
-	{
-		ft_printf("[%s] is not valid pid(100~99998).\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
+		err_exit("[%s] is not valid pid(100~99998).\n", argv[1]);
 	if (*argv[2])
 	{
 		act.sa_sigaction = handler;
 		sigemptyset(&act.sa_mask);
 		act.sa_flags = SA_SIGINFO;
 		if (sigaction(SIGUSR1, &act, NULL) < 0)
-			exit(EXIT_FAILURE);
+			err_exit("sigaction error");
 		send_msg(g_ack.pid, argv[2]);
 	}
 	return (EXIT_SUCCESS);
