@@ -1,7 +1,7 @@
 #!/bin/bash
 # Test Configuration
-NUM_REPEAT=25
-MSG_LEN=1000
+MSG_LEN=${1:-1000}
+NUM_REPEAT=${2:-1}
 printf "NUM_REAPEAT=$NUM_REPEAT, MSG_LEN=$MSG_LEN\n"
 
 # Test Cases
