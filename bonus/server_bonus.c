@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 14:35:58 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:17:20 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include "libft.h"
+#include "ft_printf.h"
 
 typedef struct s_msg {
 	char	c;

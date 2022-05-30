@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/26 23:21:01 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:17:01 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include "libft.h"
+#include "ft_printf.h"
 
 typedef struct s_msg {
 	char	c;
