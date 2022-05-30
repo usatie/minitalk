@@ -6,12 +6,13 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 09:04:10 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 17:49:35 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:09:35 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+// STDOUT_FILENO
 #include <unistd.h>
+#include "ft_printf.h"
 
 int	ft_printf(const char *format, ...)
 {

@@ -6,11 +6,14 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 21:57:06 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 17:38:04 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:07:47 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	print(t_fmt *fmt, char *str, size_t len);
+void	puthex(unsigned long long n, int capitals, char *prefix, t_fmt *fmt);
 
 void	printf_p(t_fmt *fmt, va_list ap)
 {

@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:47:17 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 17:47:37 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:02:20 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 #include <unistd.h>
 #include "ft_printf.h"
 #include "libft.h"
+
+void	fmt_init(t_fmt *fmt, const char *format);
+void	fmt_clear_spec(t_fmt *fmt);
+void	parse_flags(t_fmt *fmt);
+void	parse_width(t_fmt *fmt);
+void	parse_precision(t_fmt *fmt);
+void	parse_conversion_spec(t_fmt *fmt, va_list ap);
 
 // If overflow happens, set -1 to out_size and set EOVERFLOW to errno.
 // MEMO: libc's printf does not set errno when len > INT_MAX.

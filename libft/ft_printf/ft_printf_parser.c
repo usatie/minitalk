@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:34:31 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 17:37:10 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:06:55 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,39 @@
 #include <errno.h>
 #include "libft.h"
 #include "ft_printf.h"
+
+#define N_CONVERSIONS 9
+void	printf_percent(t_fmt *fmt, va_list ap);
+void	printf_c(t_fmt *fmt, va_list ap);
+void	printf_s(t_fmt *fmt, va_list ap);
+void	printf_p(t_fmt *fmt, va_list ap);
+void	printf_di(t_fmt *fmt, va_list ap);
+void	printf_u(t_fmt *fmt, va_list ap);
+void	printf_x_lower(t_fmt *fmt, va_list ap);
+void	printf_x_upper(t_fmt *fmt, va_list ap);
+
+static const char	g_conversions[N_CONVERSIONS] = {
+	'%',
+	'c',
+	's',
+	'p',
+	'd',
+	'i',
+	'u',
+	'x',
+	'X'
+};
+static	void		(*g_conversion_funcs[N_CONVERSIONS])(t_fmt *, va_list) = {
+	printf_percent,
+	printf_c,
+	printf_s,
+	printf_p,
+	printf_di,
+	printf_di,
+	printf_u,
+	printf_x_lower,
+	printf_x_upper
+};
 
 /*	Overview of conversion specifiers
  

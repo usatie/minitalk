@@ -6,14 +6,17 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 21:58:27 by susami            #+#    #+#             */
-/*   Updated: 2022/05/28 17:38:46 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:10:26 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// INT_MIN, INT_MAX
 #include <limits.h>
 #include <stdlib.h>
 #include "libft.h"
 #include "ft_printf.h"
+
+void	print(t_fmt *fmt, char *str, size_t len);
 
 // enough for binary unsigned long long
 #define MAXBUF 64
