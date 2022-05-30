@@ -6,14 +6,14 @@
 #    By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/06 07:33:20 by susami            #+#    #+#              #
-#    Updated: 2022/05/28 23:55:34 by susami           ###   ########.fr        #
+#    Updated: 2022/05/30 10:49:15 by susami           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -I .
 NAME	=	libft.a
-INC		=	libft.h
+CC		=	cc
+CFLAGS	=	-Wall -Wextra -Werror
+INCLUDE	=	-I include
 M_SRCS	=	ft_isalpha.c	\
 			ft_isdigit.c	\
 			ft_isalnum.c	\
@@ -76,8 +76,10 @@ PRINTF_SRCS	=	ft_printf/ft_printf.c			\
 
 ARGPARSE_SRCS	=	ft_argparse/ft_argparse_num.c	\
 
+ERROR_FUNCTIONS_SRCS	=	ft_error_functions/ft_error_functions.c	\
+
 OBJDIR		=	objs
-SRCS		=	$(M_SRCS) $(B_SRCS) $(EXTRA_SRCS) $(PRINTF_SRCS) $(ARGPARSE_SRCS)
+SRCS		=	$(M_SRCS) $(B_SRCS) $(EXTRA_SRCS) $(PRINTF_SRCS) $(ARGPARSE_SRCS) $(ERROR_FUNCTIONS_SRCS)
 OBJS		=	$(SRCS:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
@@ -95,7 +97,7 @@ re: fclean all
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDE)
 
 bonus: all
 

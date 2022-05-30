@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/29 23:02:36 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 10:56:34 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "ft_argparse.h"
+#include "ft_error_functions.h"
 
 typedef struct s_ack {
 	volatile sig_atomic_t	flg;
@@ -60,16 +61,6 @@ static void	handler(int sig, siginfo_t *siginfo, void *ucontext)
 	(void)ucontext;
 	if (siginfo->si_pid == g_ack.pid || siginfo->si_pid == 0)
 		g_ack.flg = 1;
-}
-
-static void	err_exit(const char *format, ...)
-{
-	va_list	ap;
-
-	va_start(ap, format);
-	ft_vdprintf(STDERR_FILENO, format, ap);
-	va_end(ap);
-	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv)

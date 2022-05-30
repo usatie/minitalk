@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:22:11 by susami            #+#    #+#             */
-/*   Updated: 2022/05/29 23:02:26 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 10:53:54 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "ft_argparse.h"
+#include "ft_error_functions.h"
 
 #ifndef SLEEP_US
 # define SLEEP_US 100
@@ -40,16 +41,6 @@ static void	send_msg(pid_t pid, char *msg)
 			return ;
 		msg++;
 	}
-}
-
-static void	err_exit(const char *format, ...)
-{
-	va_list	ap;
-
-	va_start(ap, format);
-	ft_vdprintf(STDERR_FILENO, format, ap);
-	va_end(ap);
-	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv)
