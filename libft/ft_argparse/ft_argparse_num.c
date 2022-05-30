@@ -6,7 +6,7 @@
 /*   By: susami <susami@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 21:25:22 by susami            #+#    #+#             */
-/*   Updated: 2022/05/29 00:38:44 by susami           ###   ########.fr       */
+/*   Updated: 2022/05/30 12:21:22 by susami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <errno.h>
 // ft_strtol()
 #include "libft.h"
+#include "ft_printf.h"
 #include "ft_argparse.h"
 
 static void	ap_fail(const char *fname, const char *msg, const char *arg,
