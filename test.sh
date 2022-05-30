@@ -1,8 +1,14 @@
 #!/bin/bash
+center() {
+  termwidth="$(tput cols)"
+  padding="$(printf '%0.1s' ={1..500})"
+  printf '%*.*s %s %*.*s\n' 0 "$(((termwidth-2-${#1})/2))" "$padding" "$1" 0 "$(((termwidth-1-${#1})/2))" "$padding"
+}
 # Test Configuration
 MSG_LEN=${1:-100}
 NUM_REPEAT=${2:-1}
-printf "NUM_REAPEAT=$NUM_REPEAT, MSG_LEN=$MSG_LEN\n"
+center "Test Config"
+printf "NUM_REAPEAT=$NUM_REPEAT\nMSG_LEN=$MSG_LEN\n\n"
 
 # Test Cases
 messages+=("hello")
@@ -21,7 +27,7 @@ total=0
 # Before starting tests, kill all server processes
 ps | grep "./server" | grep -v grep | awk '{print $1}' | xargs -n1 kill
 
-printf "====================Testing invalid arguments====================\n"
+center "Invalid arguments"
 	./server &
 	pid=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
 	((total+=1))
@@ -70,7 +76,7 @@ for (( i = 0; i < $NUM_REPEAT; i++ ))
 do
 	# 1. Testing a message from single process
 	printf "\n\n"
-	printf "====================Testing a message from single process====================\n"
+	center "Message from a single process"
 	for msg in "${messages[@]}"
 	do
 		((total+=1))
@@ -84,7 +90,7 @@ do
 
 	# 2. Testing messages from multiple processes in a row
 	printf "\n\n"
-	printf "====================Testing messages from multiple processes in a row====================\n"
+	center "Messages from multiple processes in a row"
 	((total+=1))
 	./server | tail +2 | diff <(printf "%s" "$combined_message") - &
 	pid=$(ps | grep "./server" | grep -v grep | head -1 | awk '{printf $1}')
